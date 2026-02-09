@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "name": "moltbot-deepseek",
+    "version": "1.0.0",
+    "description": "Moltbot powered by DeepSeek - Most affordable AI provider ($0.14/million tokens)"
+  },
+  "models": {
+    "providers": {
+      "deepseek": {
+        "apiKey": "${DEEPSEEK_API_KEY}",
+        "api": "openai",
+        "baseURL": "${DEEPSEEK_BASE_URL:-https://api.deepseek.com/v1}",
+        "models": [
+          {
+            "id": "deepseek-chat",
+            "name": "DeepSeek Chat",
+            "description": "General purpose DeepSeek model - Most affordable option",
+            "contextWindow": 128000,
+            "maxTokens": 8192,
+            "costPerMillionTokens": 0.14
+          },
+          {
+            "id": "deepseek-reasoner",
+            "name": "DeepSeek Reasoner",
+            "description": "Advanced reasoning model",
+            "contextWindow": 128000,
+            "maxTokens": 8192,
+            "costPerMillionTokens": 0.28
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "deepseek/deepseek-chat",
+        "fallbacks": ["deepseek/deepseek-reasoner"]
+      },
+      "models": {
+        "deepseek/deepseek-chat": {
+          "alias": "DeepSeek",
+          "costOptimized": true,
+          "maxTokensPerMinute": 10000,
+          "recommendedFor": ["coding", "general-qa", "analysis"]
+        },
+        "deepseek/deepseek-reasoner": {
+          "alias": "DeepSeek Reasoner",
+          "costOptimized": false,
+          "maxTokensPerMinute": 5000,
+          "recommendedFor": ["complex-reasoning", "math", "logic"]
+        }
+      },
+      "workspace": "/root/clawd",
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      },
+      "costControls": {
+        "maxTokensPerRequest": 4096,
+        "maxRequestsPerHour": 100,
+        "monthlyTokenLimit": 1000000
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "controlUi": {
+      "allowInsecureAuth": true
+    },
+    "auth": {
+      "token": "${CLAWDBOT_GATEWAY_TOKEN}"
+    }
+  },
+  "costOptimization": {
+    "enabled": true,
+    "preferredProvider": "deepseek",
+    "fallbackChain": ["deepseek", "claude-haiku", "kimi"],
+    "autoSwitchOnHighCost": true,
+    "monthlyBudget": 10.00,
+    "alertThreshold": 0.8
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "name": "moltbot-kimi",
+    "version": "1.0.0",
+    "description": "Moltbot powered by Kimi/Moonshot AI - Excellent Chinese/English support ($0.60/million tokens)"
+  },
+  "models": {
+    "providers": {
+      "openai": {
+        "apiKey": "${KIMI_API_KEY}",
+        "api": "openai",
+        "baseURL": "${KIMI_BASE_URL:-https://api.moonshot.cn/v1}",
+        "models": [
+          {
+            "id": "moonshot-v1-8k",
+            "name": "Kimi 8K",
+            "description": "Kimi with 8K context window - Good for general tasks",
+            "contextWindow": 8192,
+            "maxTokens": 4096,
+            "costPerMillionTokens": 0.60
+          },
+          {
+            "id": "moonshot-v1-32k",
+            "name": "Kimi 32K",
+            "description": "Kimi with 32K context window - For longer conversations",
+            "contextWindow": 32768,
+            "maxTokens": 8192,
+            "costPerMillionTokens": 1.20
+          },
+          {
+            "id": "moonshot-v1-128k",
+            "name": "Kimi 128K",
+            "description": "Kimi with 128K context window - Excellent for long documents",
+            "contextWindow": 128000,
+            "maxTokens": 8192,
+            "costPerMillionTokens": 2.40
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/moonshot-v1-8k",
+        "fallbacks": ["openai/moonshot-v1-32k", "openai/moonshot-v1-128k"]
+      },
+      "models": {
+        "openai/moonshot-v1-8k": {
+          "alias": "Kimi 8K",
+          "costOptimized": true,
+          "maxTokensPerMinute": 15000,
+          "recommendedFor": ["general-qa", "chat", "short-documents"]
+        },
+        "openai/moonshot-v1-32k": {
+          "alias": "Kimi 32K",
+          "costOptimized": false,
+          "maxTokensPerMinute": 10000,
+          "recommendedFor": ["long-conversations", "medium-documents"]
+        },
+        "openai/moonshot-v1-128k": {
+          "alias": "Kimi 128K",
+          "costOptimized": false,
+          "maxTokensPerMinute": 5000,
+          "recommendedFor": ["very-long-documents", "research", "analysis"]
+        }
+      },
+      "workspace": "/root/clawd",
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      },
+      "languageSupport": {
+        "primary": ["en", "zh"],
+        "secondary": ["ja", "ko", "es", "fr", "de"],
+        "translationEnabled": true
+      },
+      "costControls": {
+        "maxTokensPerRequest": 4096,
+        "maxRequestsPerHour": 100,
+        "monthlyTokenLimit": 1000000
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "controlUi": {
+      "allowInsecureAuth": true
+    },
+    "auth": {
+      "token": "${CLAWDBOT_GATEWAY_TOKEN}"
+    }
+  },
+  "features": {
+    "chineseSupport": {
+      "enabled": true,
+      "autoDetectLanguage": true,
+      "preferredLanguage": "auto"
+    },
+    "longContext": {
+      "enabled": true,
+      "defaultContextWindow": 8192,
+      "maxContextWindow": 128000
+    }
+  }
+}

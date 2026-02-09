@@ -1,0 +1,57 @@
+{
+  "name": "moltworker-cloudflare",
+  "version": "1.0.0",
+  "description": "Run your personal AI agent on Cloudflare with multiple affordable providers",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "vite build",
+    "deploy": "wrangler deploy",
+    "test": "vitest",
+    "cost-check": "./scripts/check-costs.sh",
+    "deploy:deepseek": "./scripts/deploy-deepseek.sh",
+    "deploy:kimi": "./scripts/deploy-kimi.sh",
+    "deploy:anthropic": "./scripts/deploy-anthropic.sh",
+    "deploy:openai": "./scripts/deploy-openai.sh",
+    "switch:deepseek": "./scripts/switch-to-deepseek.sh",
+    "monitor": "./scripts/monitor-usage.sh"
+  },
+  "keywords": [
+    "ai",
+    "cloudflare",
+    "workers",
+    "moltbot",
+    "deepseek",
+    "kimi",
+    "anthropic",
+    "openai",
+    "serverless",
+    "chatbot"
+  ],
+  "author": "yksanjo",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250207.0",
+    "@cloudflare/vitest-pool-workers": "^0.5.2",
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4",
+    "vitest": "^1.3.1",
+    "wrangler": "^4.60.0"
+  },
+  "dependencies": {
+    "@cloudflare/sandbox": "^0.0.1",
+    "hono": "^4.4.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yksanjo/moltworker-cloudflare.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yksanjo/moltworker-cloudflare/issues"
+  },
+  "homepage": "https://github.com/yksanjo/moltworker-cloudflare#readme"
+}
