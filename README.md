@@ -1,5 +1,12 @@
 # moltworker-cloudflare
 
+Production-grade project scaffold focused on reliability, maintainability, and fast onboarding.
+
+[![CI](https://img.shields.io/github/actions/workflow/status/yksanjo/moltworker-cloudflare/ci.yml?branch=main&label=ci)](https://github.com/yksanjo/moltworker-cloudflare/actions)
+![License](https://img.shields.io/github/license/yksanjo/moltworker-cloudflare)
+![Last Commit](https://img.shields.io/github/last-commit/yksanjo/moltworker-cloudflare)
+![Repo Size](https://img.shields.io/github/repo-size/yksanjo/moltworker-cloudflare)
+
 ## Detailed Description
 
 moltworker-cloudflare is maintained as an industry-grade software project with production-ready engineering practices.  
